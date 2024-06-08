@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-
 def send_email(subject, body):
     # Email configurations
     sender_email = "suvasishudgata14@gmail.com"
@@ -33,29 +32,27 @@ def send_email(subject, body):
     finally:
         server.quit()
 
-
-def stock_list(file_path):
-    """Read the stock_list from a file."""
-    with open(file_path, 'r') as file:
-        stocks = file.read().splitlines()
-    return stocks
-
 def fetch_stock_data(stock):
     """Fetch stock data for a given stock."""
     stock_data = yf.Ticker(stock)
     hist = stock_data.history(period="1d")
-    if not hist.empty:
+    avg_hist = stock_data.history(period="1y")
+
+    if not hist.empty and not avg_hist.empty:
         last_row = hist.iloc[-1]
+        avg_price_1y = avg_hist['Close'].mean()
         stock_price = last_row['Close']
         last_update = last_row.name.to_pydatetime().strftime('%Y-%m-%d %H:%M:%S')
     else:
         stock_price = None
         last_update = None
+        avg_price_1y = None
 
     return {
         "stock_name": stock,
         "stock_price": stock_price,
-        "last_update": last_update
+        "last_update": last_update,
+        "avg_price_1y": avg_price_1y
     }
 
 def stock_list(file_path):
@@ -63,7 +60,6 @@ def stock_list(file_path):
     with open(file_path, 'r') as file:
         stocks = file.read().splitlines()
     return stocks
-    
 
 def main():
     # Path to the file containing stock list
@@ -74,16 +70,16 @@ def main():
     
     # Iterate over each stock and fetch the stock data
     for stock in stocks:
-        stock_price, last_update, avg_price_1y  = fetch_stock_data(stock)
+        stock_data = fetch_stock_data(stock)
 
-        # if avg_price_1y > stock_price:
-        #     subject = "ALERT!! The price of this stock is less than the 1 year avg"
-        #     body = f"ALERT!! The price of this stock is less than the 1 year avg {stock}: {stock_price}: avg stock price : {avg_price_1y}"
-        #     send_email(subject, body)
-        print(f"stock name : {stock}, stock price :{stock_price}, avg price: {avg_price_1y}")
+        stock_price = stock_data["stock_price"]
+        avg_price_1y = stock_data["avg_price_1y"]
+
+        if avg_price_1y and stock_price and avg_price_1y > stock_price:
+            subject = "ALERT!! The price of this stock is less than the 1 year avg"
+            body = f"ALERT!! The price of this stock is less than the 1 year avg {stock}: {stock_price}: avg stock price : {avg_price_1y}"
+            send_email(subject, body)
+            print(f"ALERT!! The price of this stock is less than the 1 year avg {stock}: {stock_price}: avg stock price : {avg_price_1y}")
 
 if __name__ == "__main__":
     main()
-
-
-

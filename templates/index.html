@@ -11,7 +11,8 @@
 <body>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <!-- Current Stock Card - moved to the left -->
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         Select a Stock
@@ -29,10 +30,23 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Stock Alerts Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Best Stock Alerts
+                    </div>
+                    <div class="card-body" id="stock-alerts">
+                        <!-- Stock alerts will be populated here -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-6 offset-md-3">
+            <!-- Stock Information Card -->
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         Stock Information
