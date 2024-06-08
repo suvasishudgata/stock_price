@@ -61,6 +61,21 @@ def stock_list(file_path):
         stocks = file.read().splitlines()
     return stocks
 
+def add_stock(stock_name):
+    """Validate and add a new stock symbol to the stock list."""
+    stock_symbol = stock_name.upper() + ".NS"
+    stock_data = yf.Ticker(stock_symbol)
+    try:
+        # Attempt to fetch data for the stock to check if it exists
+        stock_data.history(period="1d")
+        file_path = r"C:\Users\suvasish\python-bot\stock.txt"
+        with open(file_path, 'a') as file:
+            file.write("\n" + stock_symbol + "\n")
+        return True, f"Stock {stock_symbol} added successfully."
+    except Exception as e:
+        return False, f"Stock {stock_name} does not exist in NSE."
+
+
 def main():
     # Path to the file containing stock list
     file_path = r"C:\Users\suvasish\python-bot\stock.txt"
@@ -79,7 +94,8 @@ def main():
             subject = "ALERT!! The price of this stock is less than the 1 year avg"
             body = f"ALERT!! The price of this stock is less than the 1 year avg {stock}: {stock_price}: avg stock price : {avg_price_1y}"
             send_email(subject, body)
-            print(f"ALERT!! The price of this stock is less than the 1 year avg {stock}: {stock_price}: avg stock price : {avg_price_1y}")
+            
+        print(f"Stock name: {stock}, Stock price: {stock_price}, Avg price: {avg_price_1y}")
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,55 @@
 /* static/styles.css */
+
+body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    font-family: Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff; /* White text for headers */
+}
+
+.card {
+    background-color: #1e1e1e; /* Slightly lighter dark for cards */
+    border: 1px solid #333; /* Border color */
+}
+
 .card-header {
-    background-color: #007bff; /* Bootstrap's primary color */
-    color: white;
+    background-color: #333; /* Darker header */
+    color: #ffffff; /* White text for header */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.form-control {
+    background-color: #333; /* Dark background for form elements */
+    color: #ffffff; /* White text for form elements */
+    border: 1px solid #555; /* Border color for form elements */
+}
+
+.form-control::placeholder {
+    color: #aaa; /* Placeholder text color */
+}
+
+#stock-info, #stock-alerts {
+    background-color: #1e1e1e; /* Dark background for info areas */
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#stock-info p, #stock-alerts p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+#stock-info hr, #stock-alerts hr {
+    border-color: #333; /* Line color */
 }
