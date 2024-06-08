@@ -9,7 +9,7 @@ def send_email(subject, body):
     # Email configurations
     sender_email = "suvasishudgata14@gmail.com"
     receiver_email = "udgatasuvasish14@gmail.com"
-    password = "moue wpqm ihho caus"
+    password = ""
 
     # Create message
     message = MIMEMultipart()
