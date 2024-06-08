@@ -1,0 +1,5 @@
+/* static/styles.css */
+.card-header {
+    background-color: #007bff; /* Bootstrap's primary color */
+    color: white;
+}
